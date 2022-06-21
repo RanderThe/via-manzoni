@@ -1,7 +1,7 @@
 import React from "react";
 import { Component } from "react";
 import ItemCard from "../Card/ItemCard";
-import { Row, Col, Card, Button } from 'react-bootstrap';
+import { Row, Col} from 'react-bootstrap';
 
 class CardList extends Component {
 
@@ -10,9 +10,14 @@ class CardList extends Component {
             <ul>
                 <Row md={4} >
                     {this.props.cards.map((card, index) => (
-                        <Col>
+                        <Col key={index}>
                             <li key={index}>
-                                <ItemCard title={card.title} text={card.text}></ItemCard>
+                                <ItemCard 
+                                key={index}
+                                cardIndex={index}
+                                deleteCard={this.props.deleteCard}
+                                title={card.title} 
+                                text={card.text}></ItemCard>
                             </li>
                         </Col>
                     ))}

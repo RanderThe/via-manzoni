@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CardList from "./components/CardList/CardList";
 import CardRegistration from "./components/CardRegistration/CardRegistration";
-import { Container, Row, Button, Navbar, NavDropdown, Nav, Form, FormControl, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Container, Button, Navbar, Nav } from 'react-bootstrap';
 import "./assets/App.css";
 import './assets/index.css';
 
@@ -21,8 +21,14 @@ class App extends Component {
       cards:newCardArray
     }
     this.setState(newState);
-  }
+  };
 
+  deleteCard(indexCard){
+    let arrayCards = this.state.cards;
+    arrayCards.splice(indexCard,1);
+    this.setState({cards:arrayCards});
+    console.log("card deletado");
+  };
 
   render() {
     return (
@@ -52,7 +58,9 @@ class App extends Component {
         </Navbar>
 
         <CardRegistration createCard={this.createCard.bind(this)}></CardRegistration>
-        <CardList cards={this.state.cards}></CardList>
+        <CardList deleteCard={this.deleteCard.bind(this)} cards={this.state.cards}>
+
+        </CardList>
       </section>
     );
   }

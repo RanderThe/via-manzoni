@@ -1,12 +1,38 @@
 @media all and (min-width: 480px) {
-    
-    .CardRegistration {
-        padding: 60px 0;
-        width: 100%;
-      }
 
-    .CardRegistration form{
-        margin: 0 auto;
-        max-width: 320px;
-    }
+  .CardRegistration {
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+    background-color: transparent;
   }
+
+  .CardRegistration form {
+    margin: 0 auto;
+    max-width: 320px;
+    padding: 12px;
+    background-color: transparent;
+    border: 2px;
+    border-radius: 3px;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    border: 1px solid #bdbdbd;
+    box-shadow: 0.9px 0.8px #888888;
+  }
+
+  .CardRegistration input {
+    margin: 2px;
+  }
+
+  .CardRegistration select {
+    margin: 2px;
+  }
+
+  .divButton{
+    margin: 0 auto;
+  }
+
+  .CardRegistration button{
+    margin: 10px;
+  }
+}
