@@ -1,0 +1,6 @@
+@media all {
+    .col.ItemCard {
+        width: 90%;
+        padding: 10px;
+    }
+}

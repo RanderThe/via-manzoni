@@ -7,8 +7,20 @@ import './assets/index.css';
 
 class App extends Component {
 
+ constructor(props){
+  super();
+  this.state= {
+    cards:[]
+  }
+ }
+
   createCard(title,text){
-    console.log("um novo card foi criado "+title + text);
+    const newCard = {title, text};
+    const newCardArray =  [...this.state.cards,newCard];
+    const newState = {
+      cards:newCardArray
+    }
+    this.setState(newState);
   }
 
 
@@ -39,12 +51,8 @@ class App extends Component {
           </Container>
         </Navbar>
 
-        <CardRegistration createCard={this.createCard}></CardRegistration>
-        <CardList></CardList>
-
-
-
-
+        <CardRegistration createCard={this.createCard.bind(this)}></CardRegistration>
+        <CardList cards={this.state.cards}></CardList>
       </section>
     );
   }
