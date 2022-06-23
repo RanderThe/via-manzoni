@@ -14,8 +14,8 @@ class App extends Component {
   }
  }
 
-  createCard(title,text){
-    const newCard = {title, text};
+  createCard(year,month,text){
+    const newCard = {year,month, text};
     const newCardArray =  [...this.state.cards,newCard];
     const newState = {
       cards:newCardArray

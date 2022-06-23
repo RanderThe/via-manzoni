@@ -2,5 +2,18 @@
     .col.ItemCard {
         width: 90%;
         padding: 10px;
+        margin: 10px;
+    }
+
+    .imgTrash {
+        position: 0 inherit;
+        align-self: center;
+        right: 0px;
+        width: 15%;
+        object-fit: contain;
+        float: right
+    }
+
+    .row{
     }
 }

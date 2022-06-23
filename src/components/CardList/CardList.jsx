@@ -16,7 +16,8 @@ class CardList extends Component {
                                 key={index}
                                 cardIndex={index}
                                 deleteCard={this.props.deleteCard}
-                                title={card.title} 
+                                year={card.year} 
+                                month={card.month} 
                                 text={card.text}></ItemCard>
                             </li>
                         </Col>
