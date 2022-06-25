@@ -14,7 +14,7 @@ class CardRegistration extends Component {
         this.month = "";
         this.years = Array.from(new Array(20), (val, index) => index + 2010);
         this.year = new Date().getFullYear();
-        this.month = new Date().getMonth() + 1;
+        this.month = new Date().getMonth()+1;
     }
 
     //_  =  private
@@ -24,6 +24,7 @@ class CardRegistration extends Component {
     }
 
     _handlerMonthChange(event) {
+        debugger;
         this.month = event.target.value;
     }
 
@@ -36,6 +37,7 @@ class CardRegistration extends Component {
         event.stopPropagation();
         this.props.createCard(this.year,this.month, this.text);
         event.target.reset();
+        this.month = new Date().getMonth()+1;
     }
 
     render() {
@@ -46,7 +48,6 @@ class CardRegistration extends Component {
                     <Form.Select
                         onChange={this._handlerMonthChange.bind(this)}
                         defaultValue={this.month}>
-                        <option>Mês</option>
                         <option value='1'>Janeiro</option>
                         <option value='2'>Fevereiro</option>
                         <option value='3'>Março</option>

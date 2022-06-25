@@ -3,6 +3,7 @@ import CardList from "../../components/CardList/CardList";
 import CardRegistration from "../../components/CardRegistration/CardRegistration";
 import "../../assets/App.css";
 import '../../assets/index.css';
+import { Link } from 'react-router-dom';
 import { Navbar, Container, Nav, Button, Image } from 'react-bootstrap';
 
 class HomePage extends Component {
@@ -42,7 +43,7 @@ class HomePage extends Component {
                 style={{ maxHeight: '100px' }}
                 navbarScroll
               >
-                <Nav.Link href="#action1">Home</Nav.Link>
+                <Nav.Link href="#action1">Comprovantes</Nav.Link>
                 <Nav.Link href="#action2">Votações</Nav.Link>
                 <Nav.Link href="#action2">Obras</Nav.Link>
                 <Nav.Link href="#" disabled>

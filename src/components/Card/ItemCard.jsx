@@ -8,7 +8,7 @@ class ItemCard extends Component {
 
     constructor(props) {
         super(props);
-        const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        const monthNames = ["","Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
             "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
         this.monthName = monthNames[this.props.month];
@@ -23,7 +23,7 @@ class ItemCard extends Component {
         return (
             <Row md={2} className="g-4">
                 <Col id='colCardID' className='ItemCard'>
-                    <Card>
+                    <Card className='CardItem'>
                         <Card.Header>
                                 {this.monthName}-{this.props.year}
                                 <Image className='imgTrash' type="button" alt="Deletar Card" src={deleteSVG}
