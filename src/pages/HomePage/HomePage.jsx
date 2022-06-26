@@ -1,18 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import CardList from "../../components/CardList/CardList";
 import CardRegistration from "../../components/CardRegistration/CardRegistration";
 import "../../assets/App.css";
 import '../../assets/index.css';
-import { Link } from 'react-router-dom';
 import { Navbar, Container, Nav, Button, Image } from 'react-bootstrap';
+import { AuthContext } from "../../context/authContext";
+
 
 class HomePage extends Component {
+
   constructor(props) {
     super();
     this.state = {
       cards: []
-    }
+    };
+    //const {authenticated,logout} = useContext(AuthContext);
+    /*const handleLogout=()=>{
+      logout();
+    };*/
   }
+
+  logout() {
+    localStorage.removeItem('user');
+    window.location.href = '/';
+  };
 
   createCard(year, month, text) {
     const newCard = { year, month, text };
@@ -31,6 +42,7 @@ class HomePage extends Component {
   };
 
   render() {
+
     return (
       <section>
         <Navbar bg="light" expand="lg">
@@ -51,7 +63,7 @@ class HomePage extends Component {
                 </Nav.Link>
               </Nav>
 
-              <Button variant="outline-warning">Sair</Button>
+              <Button onClick={() => { this.logout() }} variant="outline-warning">Sair</Button>
 
             </Navbar.Collapse>
           </Container>

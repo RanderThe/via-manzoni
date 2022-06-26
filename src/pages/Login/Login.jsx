@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button";
 import "./Login.css";
 
 export default function Login() {
+  const {authenticated,login}=useContext(AuthContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,10 +16,13 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
+    console.log("submit",{email,password});
+    login(email,password);
   }
 
   return (
-    <div className="Login">
+    <div id="login" className="Login">
+      <p>{String(authenticated)}</p>
       <Form onSubmit={handleSubmit}>
         <Form.Group size="lg" controlId="email">
           <Form.Label>Email</Form.Label>
