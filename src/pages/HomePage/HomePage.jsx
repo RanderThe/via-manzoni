@@ -14,20 +14,16 @@ class HomePage extends Component {
     this.state = {
       cards: []
     };
-    const {authenticated,logout} = useContext(AuthContext);
+    //const {authenticated,logout} = useContext(AuthContext);
     /*const handleLogout=()=>{
       logout();
     };*/
   }
 
-  handleLogout(){
-    this.logout();
-  };
-
-  /*logout() {
+  logout() {
     localStorage.removeItem('user');
     window.location.href = '/';
-  };*/
+  };
 
   createCard(year, month, text) {
     const newCard = { year, month, text };
@@ -67,7 +63,7 @@ class HomePage extends Component {
                 </Nav.Link>
               </Nav>
 
-              <Button onClick={() => { this.handleLogout() }} variant="outline-warning">Sair</Button>
+              <Button onClick={() => { this.logout() }} variant="outline-warning">Sair</Button>
 
             </Navbar.Collapse>
           </Container>
