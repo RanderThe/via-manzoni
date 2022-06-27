@@ -35,7 +35,7 @@ const AppRoutes = () => {
                             <HomePage />
                         </Private>} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/cardDetail" element={
+                    <Route path="/cardDetail/:id" element={
                         <Private>
                             <CardDetail />
                         </Private>} />

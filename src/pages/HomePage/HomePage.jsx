@@ -14,16 +14,20 @@ class HomePage extends Component {
     this.state = {
       cards: []
     };
-    //const {authenticated,logout} = useContext(AuthContext);
+    const {authenticated,logout} = useContext(AuthContext);
     /*const handleLogout=()=>{
       logout();
     };*/
   }
 
-  logout() {
+  handleLogout(){
+    this.logout();
+  };
+
+  /*logout() {
     localStorage.removeItem('user');
     window.location.href = '/';
-  };
+  };*/
 
   createCard(year, month, text) {
     const newCard = { year, month, text };
@@ -47,7 +51,7 @@ class HomePage extends Component {
       <section>
         <Navbar bg="light" expand="lg">
           <Container fluid>
-            <Navbar.Brand href="#">Via Manzoni</Navbar.Brand>
+            <Navbar.Brand style={{"font-family": "GreatVibes","font-size": "30px"}} href="#">Via Manzoni</Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
               <Nav
@@ -63,16 +67,14 @@ class HomePage extends Component {
                 </Nav.Link>
               </Nav>
 
-              <Button onClick={() => { this.logout() }} variant="outline-warning">Sair</Button>
+              <Button onClick={() => { this.handleLogout() }} variant="outline-warning">Sair</Button>
 
             </Navbar.Collapse>
           </Container>
         </Navbar>
 
         <CardRegistration createCard={this.createCard.bind(this)}></CardRegistration>
-        <CardList deleteCard={this.deleteCard.bind(this)} cards={this.state.cards}>
-
-        </CardList>
+        <CardList deleteCard={this.deleteCard.bind(this)} cards={this.state.cards}></CardList>
       </section>
     );
   }

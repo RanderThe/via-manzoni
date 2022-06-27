@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React, {useEffect,useState } from 'react';
+import { useParams } from 'react-router';
 
-class CardDetail extends Component {
+const CardDetail = () =>{
 
-    render() {
+    debugger;
+    const{id}=useParams();
 
-        const CardDetail=()=>{
-            
-        }
-
-        return (
-            <div>
-                <a>teste card detail</a>
-            </div>
-        );
-    }
+    return (
+        <main>
+            <article>
+                <h2> ID encontrado{id}</h2>
+            </article>
+        </main>
+    );
 }
+
 export default CardDetail;
