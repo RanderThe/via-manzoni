@@ -20,7 +20,6 @@ const CardRegistration = (props) => {
     }
 
     const _handlerMonthChange = (event) => {
-        debugger;
         month = event.target.value;
     }
 
