@@ -1,30 +1,34 @@
-import React from "react";
-import { Component } from "react";
+import React, { useState } from "react";
 import ItemCard from "../Card/ItemCard";
-import { Row, Col} from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
+import HomePage from "../../pages/HomePage/HomePage";
 
-class CardList extends Component {
-
-    render() {
+const CardList = (props) => {
+    if (props.cards) {
         return (
+
             <ul>
                 <Row md={4} >
-                    {this.props.cards.map((card, index) => (
+                    {props.cards.map((card, index) => (
                         <Col key={index}>
                             <li key={index}>
-                                <ItemCard 
-                                key={index}
-                                cardIndex={index}
-                                deleteCard={this.props.deleteCard}
-                                year={card.year} 
-                                month={card.month} 
-                                text={card.text}></ItemCard>
+                                <ItemCard
+                                    key={index}
+                                    cardIndex={index}
+                                    deleteCard={props.deleteCard}
+                                    year={card.year}
+                                    month={card.month}
+                                    text={card.text}></ItemCard>
                             </li>
                         </Col>
                     ))}
                 </Row>
             </ul>
+
         );
+    }
+    else {
+        return (<p>nenhum card registrado</p>);
     }
 }
 

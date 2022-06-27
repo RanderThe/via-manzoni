@@ -1,9 +1,8 @@
-import React, {useEffect,useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 
 const CardDetail = () =>{
 
-    debugger;
     const{id}=useParams();
 
     return (

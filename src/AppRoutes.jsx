@@ -4,7 +4,7 @@ import {
     Routes,
     Navigate,
 } from "react-router-dom";
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import HomePage from './pages/HomePage/HomePage';
 import Login from './pages/Login/Login';
 import NotFound from './pages/NotFound/NotFound';

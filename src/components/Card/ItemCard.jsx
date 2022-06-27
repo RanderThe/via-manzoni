@@ -5,38 +5,34 @@ import { Row, Col, Card, Button, Image } from 'react-bootstrap';
 import "../../assets/App.css";
 import { Link } from 'react-router-dom';
 
-class ItemCard extends Component {
+const ItemCard = (props) => {
 
-    constructor(props) {
-        super(props);
-        const monthNames = ["", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    const monthNames = ["", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-        this.monthName = monthNames[this.props.month];
-    }
+    const monthName = monthNames[props.month];
 
-    deleteCard() {
-        const cardIndex = this.props.cardIndex;
-        this.props.deleteCard(cardIndex);
+    const deleteCard = () => {
+        const cardIndex = props.cardIndex;
+        props.deleteCard(cardIndex);
     };
 
-    render() {
         return (
             <Row md={2} className="g-4">
                 <Col id='colCardID' className='ItemCard'>
                     <Card className='CardItem'>
                         <Card.Header>
-                            {this.monthName}-{this.props.year}
+                            {monthName}-{props.year}
                             <Image className='imgTrash' type="button" alt="Deletar Card" src={deleteSVG}
-                                onClick={this.deleteCard.bind(this)} />
+                                onClick={deleteCard.bind(this)} />
                         </Card.Header>
                         <Card.Body>
-                            <Card.Title>{this.props.year}-{this.props.month}</Card.Title>
+                            <Card.Title>{props.year}-{props.month}</Card.Title>
                             <Card.Text>
-                                {this.props.text}
+                                {props.text}
                             </Card.Text>
                             <div className="centerButton">
-                                <Link to={`../CardDetail/${this.props.month + '' + this.props.year}`}>
+                                <Link to={`../CardDetail/${props.month + '' + props.year}`}>
                                     <Button variant="primary">Ver relatório</Button>
                                 </Link>
                             </div>
@@ -45,7 +41,6 @@ class ItemCard extends Component {
                 </Col>
             </Row>
         );
-    }
 }
 
 export default ItemCard;
