@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import ItemCard from "../Card/ItemCard";
 import { Row, Col } from 'react-bootstrap';
-import HomePage from "../../pages/HomePage/HomePage";
 
 const CardList = (props) => {
     if (props.cards) {

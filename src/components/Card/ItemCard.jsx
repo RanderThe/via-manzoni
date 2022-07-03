@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import "./ItemCardStyle.css";
 import deleteSVG from "../../assets/img/iconDelete.svg";
 import { Row, Col, Card, Button, Image } from 'react-bootstrap';

@@ -9,14 +9,18 @@ import HomePage from './pages/HomePage/HomePage';
 import Login from './pages/Login/Login';
 import NotFound from './pages/NotFound/NotFound';
 import CardDetail from './pages/CardDetail/CardDetail';
+import Reports from "./pages/Reports/Reports";
+import Receipts from "./pages/Receipts/Receipts";
+import Charts from "./pages/Charts/Charts";
 import { AuthProvider, AuthContext } from "./context/authContext";
 
 const AppRoutes = () => {
 
     const Private = ({ children }) => {
-        const { authenticated,loading } = useContext(AuthContext);
+        debugger;
+        const { authenticated, loading } = useContext(AuthContext);
 
-        if(loading){
+        if (loading) {
             return <div className="loading">Carregando...</div>
         }
 
@@ -33,12 +37,29 @@ const AppRoutes = () => {
                     <Route exact path="/" element={
                         <Private>
                             <HomePage />
-                        </Private>} />
+                        </Private>}
+                    />
                     <Route path="/login" element={<Login />} />
                     <Route path="/cardDetail/:id" element={
                         <Private>
                             <CardDetail />
-                        </Private>} />
+                        </Private>}
+                    />
+                    <Route path="/receipts" element={
+                        <Private>
+                            <Receipts />
+                        </Private>}
+                    />
+                    <Route path="/charts" element={
+                        <Private>
+                            <Charts />
+                        </Private>}
+                    />
+                    <Route path="reports" element={
+                        <Private>
+                            <Reports />
+                        </Private>}
+                    />
                     <Route
                         path="*"
                         element={

@@ -22,8 +22,8 @@ export default function Login() {
 
   return (
       <div style={{
-        "padding-right": "20px",
-        "padding-left": "20px"}} 
+        "paddingRight": "20px",
+        "paddingLeft": "20px"}} 
         id="login" 
         className="Login">
         <h2 className="font-face-gm">Via Manzoni</h2>
