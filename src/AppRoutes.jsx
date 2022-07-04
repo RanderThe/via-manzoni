@@ -17,7 +17,6 @@ import { AuthProvider, AuthContext } from "./context/authContext";
 const AppRoutes = () => {
 
     const Private = ({ children }) => {
-        debugger;
         const { authenticated, loading } = useContext(AuthContext);
 
         if (loading) {

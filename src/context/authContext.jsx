@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -17,21 +19,28 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
     }, []);
 
+
+    const auth = getAuth();
     const login = (email, password) => {
-        console.log("login auth", { email, password });
         //create session
-
-        const loggedUser = {
-            id: "123",
-            email,
-        }
-
-        localStorage.setItem("user", JSON.stringify(loggedUser));
-
-        if (password === "123") {
-            setUser(loggedUser);
-            navigate("/");
-        }
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const loggedUser = {
+                    id: userCredential.user.uid,
+                    email,
+                }
+                console.log(userCredential);
+                localStorage.setItem("user", JSON.stringify(loggedUser));
+                setUser(loggedUser);
+                navigate("/");
+            })
+            .catch((error) => {
+                debugger;
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage);
+            });
     };
 
     const logout = () => {
