@@ -13,13 +13,11 @@ const HomePage = () => {
   const [cards, setCards] = useState([]);
   const [test, setTest] = useState([]);
 
-
-
   const fetchCoin = async () => {
     const data = await getFirebase('users');
 
     setTest(data);
-debugger;
+    debugger;
     console.log("homepage");
     console.log(data);
   };

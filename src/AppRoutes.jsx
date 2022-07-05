@@ -13,6 +13,8 @@ import Reports from "./pages/Reports/Reports";
 import Receipts from "./pages/Receipts/Receipts";
 import Charts from "./pages/Charts/Charts";
 import { AuthProvider, AuthContext } from "./context/authContext";
+import SignUp from "./pages/SignUp/SignUp";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 const AppRoutes = () => {
 
@@ -39,6 +41,8 @@ const AppRoutes = () => {
                         </Private>}
                     />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/signUp" element={<SignUp/>}/>  
+                    <Route path="/resetPassword" element={<ResetPassword/>}/>
                     <Route path="/cardDetail/:id" element={
                         <Private>
                             <CardDetail />
