@@ -1,17 +1,20 @@
 import React, { Component, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Form } from "react-bootstrap";
+import { AuthContext } from '../../context/authContext';
 
 export default function ResetPassword() {
 
     const [email, setEmail] = useState("");
+    const { msgAuthStatus, resetPassword } = useContext(AuthContext);
 
     function handleSubmit(event) {
         event.preventDefault();
+        resetPassword(email);
     }
 
     function validateForm() {
-        return true;
+        return email.length > 0;
     }
 
     return (
@@ -23,8 +26,10 @@ export default function ResetPassword() {
             className="SignUp">
 
             <Form onSubmit={handleSubmit}>
-            <h2 style={{"textAlign": "center",
-                        "marginBottom": "20px"}}>Recuperar Senha</h2>
+                <h2 style={{
+                    "textAlign": "center",
+                    "marginBottom": "20px"
+                }}>Recuperar Senha</h2>
                 <div className="mb-3">
                     <Form.Group size="lg" controlId="email">
                         <Form.Label>Informe o e-mail cadastrado:</Form.Label>

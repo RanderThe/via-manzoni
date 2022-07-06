@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, createUserWithEmailAndPassword   } from "firebase/auth";
 
 export const AuthContext = createContext();
 
@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [msgAuthStatus, setMsgAuthStatus] = useState(null);
 
     useEffect(() => {
         const recoveredUser = localStorage.getItem('user');
@@ -36,9 +37,9 @@ export const AuthProvider = ({ children }) => {
                 navigate("/");
             })
             .catch((error) => {
-                debugger;
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                setMsgAuthStatus(errorMessage);
                 console.log(errorMessage);
             });
     };
@@ -50,17 +51,40 @@ export const AuthProvider = ({ children }) => {
         navigate("/login");
     };
 
-    const resetPassword = () => {
-
+    const resetPassword = (email) => {
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                // Password reset email sent!
+                // ..
+                setMsgAuthStatus("Um e-mail foi enviado com a recuperação da senha");
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setMsgAuthStatus(errorMessage);
+                // ..
+            });
     };
 
-    const register = () => {
-
+    const register = (email, password) => {
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          setMsgAuthStatus("Usuario criado : " + user.email);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setMsgAuthStatus(errorMessage);
+          // ..
+        });
     };
 
     return (
         <AuthContext.Provider
-            value={{ authenticated: !!user, user, login, logout, resetPassword, register, loading }}>
+            value={{ authenticated: !!user, user, login, logout, resetPassword, register, loading, msgAuthStatus }}>
             {children}
         </AuthContext.Provider>
     )
