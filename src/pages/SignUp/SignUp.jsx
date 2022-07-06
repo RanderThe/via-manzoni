@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/authContext';
 
 export default function SignUp() {
 
-    const { msgAuthStatus, register } = useContext(AuthContext);
+    const { msgAuth, register } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setconfirmPassword] = useState("");

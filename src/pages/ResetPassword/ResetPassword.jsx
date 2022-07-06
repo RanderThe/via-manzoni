@@ -1,12 +1,12 @@
 import React, { Component, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Form } from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
 import { AuthContext } from '../../context/authContext';
 
 export default function ResetPassword() {
 
     const [email, setEmail] = useState("");
-    const { msgAuthStatus, resetPassword } = useContext(AuthContext);
+    const { msgResetPassStatus,msgResetPass, resetPassword } = useContext(AuthContext);
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -40,6 +40,9 @@ export default function ResetPassword() {
                         />
                     </Form.Group>
                 </div>
+                <Alert show={msgResetPass} variant={msgResetPassStatus}>
+                    {msgResetPass}
+                </Alert>
                 <div className="d-grid">
                     <Button block="true" size="lg" type="submit" disabled={!validateForm()}>
                         Recuperar

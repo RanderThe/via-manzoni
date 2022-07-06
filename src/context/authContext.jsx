@@ -10,7 +10,10 @@ export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [msgAuthStatus, setMsgAuthStatus] = useState(null);
+    const [msgAuth, setMsgAuth] = useState(null);
+    const [msgResetPassStatus, setMsgResetPassStatus] = useState(null);
+    const [msgResetPass, setMsgResetPass] = useState(null);
+    const [msgRegister, setMsgRegister] = useState(null);
 
     useEffect(() => {
         const recoveredUser = localStorage.getItem('user');
@@ -35,11 +38,12 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem("user", JSON.stringify(loggedUser));
                 setUser(loggedUser);
                 navigate("/");
+                cleanAllMsgs();
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                setMsgAuthStatus(errorMessage);
+                setMsgAuth(errorMessage);
                 console.log(errorMessage);
             });
     };
@@ -56,12 +60,15 @@ export const AuthProvider = ({ children }) => {
             .then(() => {
                 // Password reset email sent!
                 // ..
-                setMsgAuthStatus("Um e-mail foi enviado com a recuperação da senha");
+                setMsgResetPass("Um e-mail foi enviado com a recuperação da senha. Verifique também na caixa de SPAM e Lixeira");
+                setMsgResetPassStatus("success");
             })
             .catch((error) => {
                 const errorCode = error.code;
+                debugger;
                 const errorMessage = error.message;
-                setMsgAuthStatus(errorMessage);
+                setMsgResetPass(errorMessage);
+                setMsgResetPassStatus("danger");
                 // ..
             });
     };
@@ -71,20 +78,28 @@ export const AuthProvider = ({ children }) => {
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
-          setMsgAuthStatus("Usuario criado : " + user.email);
+          setMsgRegister("Usuario criado : " + user.email);
           // ...
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          setMsgAuthStatus(errorMessage);
+          setMsgRegister(errorMessage);
           // ..
         });
     };
 
+
+    const cleanAllMsgs = () =>{
+        setMsgAuth(null);
+        setMsgResetPass(null);
+        setMsgRegister(null);
+        setMsgResetPassStatus(null);
+    };
+
     return (
         <AuthContext.Provider
-            value={{ authenticated: !!user, user, login, logout, resetPassword, register, loading, msgAuthStatus }}>
+            value={{ authenticated: !!user, user, login, logout, resetPassword, register, loading, msgAuth,msgRegister,msgResetPassStatus,msgResetPass }}>
             {children}
         </AuthContext.Provider>
     )

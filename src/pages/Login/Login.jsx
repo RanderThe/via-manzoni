@@ -1,12 +1,11 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../context/authContext";
-import Form from "react-bootstrap/Form"
-import Button from "react-bootstrap/Button";
+import { Alert,Button,Form } from "react-bootstrap";
 import "./Login.css";
 import { Link } from 'react-router-dom';
 
 export default function Login() {
-  const { authenticated, login } = useContext(AuthContext);
+  const { authenticated, login, msgAuth } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,6 +50,11 @@ export default function Login() {
             />
           </Form.Group>
         </div>
+        <div>
+        <Alert show={msgAuth} variant="danger">
+      {msgAuth}
+    </Alert>
+        </div>
         <div className="d-grid">
           <Button block="true" size="lg" type="submit" disabled={!validateForm()}>
             Entrar
@@ -59,7 +63,7 @@ export default function Login() {
         <p className="forgot-password text-right">Esqueceu sua senha ?
           <Link to="/resetPassword"> Recupere aqui!</Link>
         </p>
-        <p style={{"marginBottom": "20px",}} className="forgot-password text-right">Não tem cadastro ?
+        <p style={{ "marginBottom": "20px", }} className="forgot-password text-right">Não tem cadastro ?
           <Link to="/signUp"> Cadastre-se aqui!</Link>
         </p>
       </Form>
