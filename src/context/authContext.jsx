@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, createUserWithEmailAndPassword   } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, createUserWithEmailAndPassword } from "firebase/auth";
+import { writeUserData } from '../api/firebaseRepository';
 
 export const AuthContext = createContext();
 
@@ -73,24 +74,25 @@ export const AuthProvider = ({ children }) => {
             });
     };
 
-    const register = (email, password) => {
+    const register = (email, password, name) => {
         createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in 
-          const user = userCredential.user;
-          setMsgRegister("Usuario criado : " + user.email);
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setMsgRegister(errorMessage);
-          // ..
-        });
+            .then((userCredential) => {
+                // Signed in 
+                debugger;
+                const user = userCredential.user;
+                setMsgRegister("Usuario criado : " + user.email);
+                const data = writeUserData(userCredential.user.uid, name, email)
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setMsgRegister(errorMessage);
+                // ..
+            });
     };
 
-
-    const cleanAllMsgs = () =>{
+    const cleanAllMsgs = () => {
         setMsgAuth(null);
         setMsgResetPass(null);
         setMsgRegister(null);
@@ -99,7 +101,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ authenticated: !!user, user, login, logout, resetPassword, register, loading, msgAuth,msgRegister,msgResetPassStatus,msgResetPass }}>
+            value={{ authenticated: !!user, user, login, logout, resetPassword, register, loading, msgAuth, msgRegister, msgResetPassStatus, msgResetPass }}>
             {children}
         </AuthContext.Provider>
     )

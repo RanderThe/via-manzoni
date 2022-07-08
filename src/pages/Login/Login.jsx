@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../context/authContext";
-import { Alert,Button,Form } from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
 import "./Login.css";
 import { Link } from 'react-router-dom';
 
@@ -51,9 +51,9 @@ export default function Login() {
           </Form.Group>
         </div>
         <div>
-        <Alert show={msgAuth} variant="danger">
-      {msgAuth}
-    </Alert>
+          <Alert show={msgAuth} variant="danger">
+            {msgAuth}
+          </Alert>
         </div>
         <div className="d-grid">
           <Button block="true" size="lg" type="submit" disabled={!validateForm()}>

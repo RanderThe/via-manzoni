@@ -1,12 +1,12 @@
 import React, { Component, useState, useContext } from 'react';
 import "./SignUp.css";
 import { Link } from 'react-router-dom';
-import { Button, Form } from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
 import { AuthContext } from '../../context/authContext';
 
 export default function SignUp() {
 
-    const { msgAuth, register } = useContext(AuthContext);
+    const { msgAuth, register, msgRegister } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setconfirmPassword] = useState("");
@@ -14,11 +14,11 @@ export default function SignUp() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        register(email,password);
+        register(email, password, name);
     }
 
     function validateForm() {
-        return email.length > 0 && password.length > 0;
+        return email.length > 0 && password.length > 0 && password === confirmPassword;
     }
 
     return (
@@ -75,6 +75,9 @@ export default function SignUp() {
                         />
                     </Form.Group>
                 </div>
+                <Alert show={msgRegister} variant="danger">
+                    {msgRegister}
+                </Alert>
                 <div className="d-grid">
                     <Button block="true" size="lg" type="submit" disabled={!validateForm()}>
                         Registrar
