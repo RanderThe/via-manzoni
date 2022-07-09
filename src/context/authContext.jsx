@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, createUserWithEmailAndPassword } from "firebase/auth";
-import { writeUserData } from '../api/firebaseRepository';
+import { writeUserData, getDocByIDFirebase } from '../api/firebaseRepository';
 import { doc, setDoc } from "firebase/firestore";
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import firebaseConfig from "../api/firebaseConfig";
@@ -35,16 +35,28 @@ export const AuthProvider = ({ children }) => {
         //create session
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                // Signed in 
-                const loggedUser = {
-                    id: userCredential.user.uid,
-                    email,
-                }
-                console.log(userCredential);
-                localStorage.setItem("user", JSON.stringify(loggedUser));
-                setUser(loggedUser);
-                navigate("/");
-                cleanAllMsgs();
+
+                debugger;
+
+                getDocByIDFirebase("users", userCredential.user.uid)
+                    .then(userSave => {
+                        // Signed in 
+                        const loggedUser = {
+                            id: userCredential.user.uid,
+                            email,
+                            name: userSave.name,
+                            apartment: userSave.apartment
+                        };
+
+                        console.log(loggedUser);
+                        localStorage.setItem("user", JSON.stringify(loggedUser));
+                        setUser(loggedUser);
+                        debugger;
+                        if (loggedUser.apartment != "107") {
+                            navigate("/");
+                        }
+                        cleanAllMsgs();
+                    });
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -71,7 +83,6 @@ export const AuthProvider = ({ children }) => {
             })
             .catch((error) => {
                 const errorCode = error.code;
-                debugger;
                 const errorMessage = error.message;
                 setMsgResetPass(errorMessage);
                 setMsgResetPassStatus("danger");
@@ -79,7 +90,7 @@ export const AuthProvider = ({ children }) => {
             });
     };
 
-    const register = (email, password, name,apartament) => {
+    const register = (email, password, name, apartament) => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
@@ -88,11 +99,11 @@ export const AuthProvider = ({ children }) => {
                 setMsgRegister("Usuario criado : " + user.email);
                 const app = initializeApp(firebaseConfig);
                 const db = getFirestore(app);
-                const resultdo =  setDoc(doc(db, "users", user.uid),{
+                const resultdo = setDoc(doc(db, "users", user.uid), {
                     name: name,
                     email: email,
                     apartment: apartament
-                }).catch((error)=>{
+                }).catch((error) => {
                     setMsgRegister(error);
                 });
 
