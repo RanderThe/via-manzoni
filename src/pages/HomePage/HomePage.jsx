@@ -4,8 +4,7 @@ import CardRegistration from "../../components/CardRegistration/CardRegistration
 import AppNavBar from '../../components/AppNavBar/AppNavBar';
 import "../../assets/App.css";
 import '../../assets/index.css';
-import { AuthContext } from "../../context/authContext";
-import { getFirebase,writeUserData } from '../../api/firebaseRepository';
+import { getFirebase } from '../../api/firebaseRepository';
 import axios from "axios";
 
 const HomePage = () => {
@@ -16,11 +15,9 @@ const HomePage = () => {
   const fetchCoin = async () => {
     debugger;
     const data = await getFirebase('users');
-    const userdata = await writeUserData('randerteste','12312','12312312');
     setTest(data);
     debugger;
     console.log("homepage");
-    console.log(userdata);
     console.log(data);
   };
 

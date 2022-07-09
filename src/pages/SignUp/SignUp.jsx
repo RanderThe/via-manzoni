@@ -11,10 +11,12 @@ export default function SignUp() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setconfirmPassword] = useState("");
     const [name, setName] = useState("");
+    const [apartment, setApartment] = useState("");
+
 
     function handleSubmit(event) {
         event.preventDefault();
-        register(email, password, name);
+        register(email, password, name, apartment);
     }
 
     function validateForm() {
@@ -43,6 +45,28 @@ export default function SignUp() {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
+                    </Form.Group>
+                </div>
+                <div className="mb-3">
+                    <Form.Group size="lg" controlId="apartment">
+                        <Form.Label>Apartamento</Form.Label>
+                        <Form.Select
+                            onChange={(e) => setApartment(e.target.value)}
+                            defaultValue='0'>
+                            <option value='0'>Número</option>
+                            <option value='107'>107</option>
+                            <option value='108'>108</option>
+                            <option value='109'>109</option>
+                            <option value='207'>207</option>
+                            <option value='208'>208</option>
+                            <option value='209'>209</option>
+                            <option value='307'>307</option>
+                            <option value='308'>308</option>
+                            <option value='309'>309</option>
+                            <option value='407'>407</option>
+                            <option value='408'>408</option>
+                            <option value='409'>409</option>
+                        </Form.Select>
                     </Form.Group>
                 </div>
                 <div className="mb-3">

@@ -2,6 +2,11 @@ import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, createUserWithEmailAndPassword } from "firebase/auth";
 import { writeUserData } from '../api/firebaseRepository';
+import { doc, setDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import firebaseConfig from "../api/firebaseConfig";
+import { initializeApp } from 'firebase/app';
+
 
 export const AuthContext = createContext();
 
@@ -74,14 +79,23 @@ export const AuthProvider = ({ children }) => {
             });
     };
 
-    const register = (email, password, name) => {
+    const register = (email, password, name,apartament) => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
                 debugger;
                 const user = userCredential.user;
                 setMsgRegister("Usuario criado : " + user.email);
-                const data = writeUserData(userCredential.user.uid, name, email)
+                const app = initializeApp(firebaseConfig);
+                const db = getFirestore(app);
+                const resultdo =  setDoc(doc(db, "users", user.uid),{
+                    name: name,
+                    email: email,
+                    apartment: apartament
+                }).catch((error)=>{
+                    setMsgRegister(error);
+                });
+
                 // ...
             })
             .catch((error) => {
