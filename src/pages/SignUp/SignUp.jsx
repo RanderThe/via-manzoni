@@ -1,4 +1,4 @@
-import React, { Component, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import "./SignUp.css";
 import { Link } from 'react-router-dom';
 import { Alert, Button, Form } from "react-bootstrap";
@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/authContext';
 
 export default function SignUp() {
 
-    const { msgAuth, register, msgRegister } = useContext(AuthContext);
+    const { register, msgRegister } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setconfirmPassword] = useState("");

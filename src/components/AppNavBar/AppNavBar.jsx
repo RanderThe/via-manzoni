@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const AppNavBar = () => {
 
-  const { authenticated, logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
 
   const handleLogout = () => logout();
 

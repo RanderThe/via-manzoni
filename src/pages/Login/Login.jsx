@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../context/authContext";
-import { Alert, Button, Form } from "react-bootstrap";
+import { Alert, Button, Form, Spinner } from "react-bootstrap";
 import "./Login.css";
 import { Link } from 'react-router-dom';
 
 export default function Login() {
-  const { authenticated, login, msgAuth } = useContext(AuthContext);
+  const { isLoading, login, msgAuth, alertVariant } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,10 +15,12 @@ export default function Login() {
   }
 
   function handleSubmit(event) {
+    debugger;
     event.preventDefault();
     console.log("submit", { email, password });
     login(email, password);
   }
+
 
   return (
     <div style={{
@@ -33,6 +35,7 @@ export default function Login() {
           <Form.Group size="lg" controlId="email">
             <Form.Label>E-mail</Form.Label>
             <Form.Control
+              disabled={isLoading}
               autoFocus
               type="email"
               value={email}
@@ -44,19 +47,28 @@ export default function Login() {
           <Form.Group size="lg" controlId="password">
             <Form.Label>Senha</Form.Label>
             <Form.Control
+              disabled={isLoading}
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
         </div>
-        <div>
-          <Alert show={msgAuth} variant="danger">
+        <div style={{
+          "justifyContent": "center",
+          "textAlign": "center",
+          "alignItems": "center"
+        }}>
+          <Alert show={msgAuth} variant={alertVariant}>
             {msgAuth}
           </Alert>
+          {isLoading ?
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner> : null}
         </div>
         <div className="d-grid">
-          <Button block="true" size="lg" type="submit" disabled={!validateForm()}>
+          <Button block="true" size="lg" type="submit" disabled={!validateForm() || isLoading}>
             Entrar
           </Button>
         </div>

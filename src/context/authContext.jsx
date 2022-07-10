@@ -1,12 +1,10 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, createUserWithEmailAndPassword } from "firebase/auth";
-import { writeUserData, getDocByIDFirebase } from '../api/firebaseRepository';
-import { doc, setDoc } from "firebase/firestore";
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getDocByIDFirebase } from '../api/firebaseRepository';
+import { doc, setDoc, getFirestore } from "firebase/firestore";
 import firebaseConfig from "../api/firebaseConfig";
 import { initializeApp } from 'firebase/app';
-
 
 export const AuthContext = createContext();
 
@@ -16,10 +14,12 @@ export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [msgAuth, setMsgAuth] = useState(null);
     const [msgResetPassStatus, setMsgResetPassStatus] = useState(null);
     const [msgResetPass, setMsgResetPass] = useState(null);
     const [msgRegister, setMsgRegister] = useState(null);
+    const [alertVariant, setAlertVariant] = useState();
 
     useEffect(() => {
         const recoveredUser = localStorage.getItem('user');
@@ -35,9 +35,7 @@ export const AuthProvider = ({ children }) => {
         //create session
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-
-                debugger;
-
+                setIsLoading(true);
                 getDocByIDFirebase("users", userCredential.user.uid)
                     .then(userSave => {
                         // Signed in 
@@ -45,23 +43,28 @@ export const AuthProvider = ({ children }) => {
                             id: userCredential.user.uid,
                             email,
                             name: userSave.name,
-                            apartment: userSave.apartment
+                            apartment: userSave.apartment,
+                            autorization: userSave.autorization
                         };
 
-                        console.log(loggedUser);
                         localStorage.setItem("user", JSON.stringify(loggedUser));
                         setUser(loggedUser);
-                        debugger;
-                        if (loggedUser.apartment != "107") {
-                            navigate("/");
+                        if (loggedUser.autorization === 0 || loggedUser.autorization !== 'undefined') {
+                            setMsgAuth("Seu usuário ainda não foi válidado pelo síndico!");
+                            setAlertVariant("warning");
                         }
-                        cleanAllMsgs();
+                        else{
+                            navigate("/");
+                            cleanAllMsgs();
+                        }
+                        setIsLoading(false);
                     });
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 setMsgAuth(errorMessage);
+                setAlertVariant("danger");
                 console.log(errorMessage);
             });
     };
@@ -99,21 +102,19 @@ export const AuthProvider = ({ children }) => {
                 setMsgRegister("Usuario criado : " + user.email);
                 const app = initializeApp(firebaseConfig);
                 const db = getFirestore(app);
-                const resultdo = setDoc(doc(db, "users", user.uid), {
+                const resultado = setDoc(doc(db, "users", user.uid), {
                     name: name,
                     email: email,
-                    apartment: apartament
+                    apartment: apartament,
+                    autorization: "0"
                 }).catch((error) => {
                     setMsgRegister(error);
                 });
-
-                // ...
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 setMsgRegister(errorMessage);
-                // ..
             });
     };
 
@@ -126,7 +127,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ authenticated: !!user, user, login, logout, resetPassword, register, loading, msgAuth, msgRegister, msgResetPassStatus, msgResetPass }}>
+            value={{ authenticated: !!user, user, login,isLoading, logout, resetPassword, register, loading, msgAuth, msgRegister, msgResetPassStatus, msgResetPass, alertVariant }}>
             {children}
         </AuthContext.Provider>
     )

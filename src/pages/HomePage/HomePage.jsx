@@ -1,15 +1,15 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import CardList from "../../components/CardList/CardList";
 import CardRegistration from "../../components/CardRegistration/CardRegistration";
 import AppNavBar from '../../components/AppNavBar/AppNavBar';
 import "../../assets/App.css";
 import '../../assets/index.css';
 import { getFirebase } from '../../api/firebaseRepository';
-import axios from "axios";
 
 const HomePage = () => {
 
   const [cards, setCards] = useState([]);
+  /*
   const [test, setTest] = useState([]);
 
   //remover
@@ -19,9 +19,10 @@ const HomePage = () => {
     console.log("homepage");
     console.log(data);
   };
+*/
 
   useEffect(() => {
-    fetchCoin();
+    //fetchCoin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
