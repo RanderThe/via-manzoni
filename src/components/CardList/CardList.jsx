@@ -5,7 +5,6 @@ import { Row, Col } from 'react-bootstrap';
 const CardList = (props) => {
     if (props.cards) {
         return (
-
             <ul>
                 <Row md={4} >
                     {props.cards.map((card, index) => (

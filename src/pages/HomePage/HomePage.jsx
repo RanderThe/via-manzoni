@@ -8,12 +8,9 @@ import { getCollection } from '../../api/firebaseRepository';
 
 const HomePage = () => {
 
-  const collection = [];
-  const [cards, setCards] = useState(collection);
+  const [cards, setCards] = useState([]);
 
-  //remover
   const getMonths = async () => {
-    while (collection.length) { collection.pop(); }
     const monthList = await getCollection('months');
     debugger;
     for (var i = 0; i < monthList.length; i++) {
@@ -23,14 +20,13 @@ const HomePage = () => {
         text: monthList[i].text,
         key: monthList[i].key
       };
-      setCards([...cards, card]);
-      if (!collection.find(o => o.year === card.year && o.month === card.month))
-        collection.push(card);
+
+      const arrayCards = cards;
+      if (!cards.find(o => o.year === card.year && o.month === card.month)) {
+        arrayCards.push(card);
+        setCards([...arrayCards]);
+      }
     }
-    collection.forEach(element => {
-      setCards([...cards, element]);
-    });
-    console.log(cards);
   };
 
 
@@ -39,8 +35,9 @@ const HomePage = () => {
   }, []);
 
   const createCard = (year, month, text) => {
+    debugger;
     const newCard = { year, month, text };
-    console.log(cards);
+
     if (!cards.find(o => o.year === newCard.year && o.month === newCard.month))
       setCards([...cards, newCard]);
   };
@@ -48,14 +45,15 @@ const HomePage = () => {
   const deleteCard = (indexCard) => {
     const arrayCards = cards;
     arrayCards.splice(indexCard, 1);
-    setCards([...arrayCards])
+    setCards([...arrayCards]);
   };
 
   return (
+
     <section>
       <AppNavBar></AppNavBar>
-      <CardRegistration createCard={createCard.bind()}></CardRegistration>
-      <CardList deleteCard={deleteCard.bind()} cards={cards}></CardList>
+      <CardRegistration createCard={createCard.bind(this)}></CardRegistration>
+      <CardList deleteCard={deleteCard.bind(this)} cards={cards}></CardList>
     </section>
   );
 }
