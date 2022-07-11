@@ -4,31 +4,45 @@ import CardRegistration from "../../components/CardRegistration/CardRegistration
 import AppNavBar from '../../components/AppNavBar/AppNavBar';
 import "../../assets/App.css";
 import '../../assets/index.css';
-import { getFirebase } from '../../api/firebaseRepository';
+import { getCollection } from '../../api/firebaseRepository';
 
 const HomePage = () => {
 
-  const [cards, setCards] = useState([]);
-  /*
-  const [test, setTest] = useState([]);
+  const collection = [];
+  const [cards, setCards] = useState(collection);
 
   //remover
-  const fetchCoin = async () => {
-    const data = await getFirebase('users');
-    setTest(data);
-    console.log("homepage");
-    console.log(data);
+  const getMonths = async () => {
+    while (collection.length) { collection.pop(); }
+    const monthList = await getCollection('months');
+    debugger;
+    for (var i = 0; i < monthList.length; i++) {
+      var card = {
+        year: monthList[i].year,
+        month: monthList[i].month,
+        text: monthList[i].text,
+        key: monthList[i].key
+      };
+      setCards([...cards, card]);
+      if (!collection.find(o => o.year === card.year && o.month === card.month))
+        collection.push(card);
+    }
+    collection.forEach(element => {
+      setCards([...cards, element]);
+    });
+    console.log(cards);
   };
-*/
+
 
   useEffect(() => {
-    //fetchCoin();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getMonths();
   }, []);
 
   const createCard = (year, month, text) => {
     const newCard = { year, month, text };
-    setCards([...cards, newCard]);
+    console.log(cards);
+    if (!cards.find(o => o.year === newCard.year && o.month === newCard.month))
+      setCards([...cards, newCard]);
   };
 
   const deleteCard = (indexCard) => {
@@ -40,8 +54,8 @@ const HomePage = () => {
   return (
     <section>
       <AppNavBar></AppNavBar>
-      <CardRegistration createCard={createCard.bind(this)}></CardRegistration>
-      <CardList deleteCard={deleteCard.bind(this)} cards={cards}></CardList>
+      <CardRegistration createCard={createCard.bind()}></CardRegistration>
+      <CardList deleteCard={deleteCard.bind()} cards={cards}></CardList>
     </section>
   );
 }

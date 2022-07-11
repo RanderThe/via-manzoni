@@ -17,7 +17,6 @@ export default function Login() {
   function handleSubmit(event) {
     debugger;
     event.preventDefault();
-    console.log("submit", { email, password });
     login(email, password);
   }
 

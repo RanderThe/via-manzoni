@@ -49,7 +49,8 @@ export const AuthProvider = ({ children }) => {
 
                         localStorage.setItem("user", JSON.stringify(loggedUser));
                         setUser(loggedUser);
-                        if (loggedUser.autorization === 0 || loggedUser.autorization !== 'undefined') {
+                        debugger;
+                        if (loggedUser.autorization === 0 || loggedUser.autorization === 'undefined') {
                             setMsgAuth("Seu usuário ainda não foi válidado pelo síndico!");
                             setAlertVariant("warning");
                         }
@@ -65,12 +66,10 @@ export const AuthProvider = ({ children }) => {
                 const errorMessage = error.message;
                 setMsgAuth(errorMessage);
                 setAlertVariant("danger");
-                console.log(errorMessage);
             });
     };
 
     const logout = () => {
-        console.log("logout");
         localStorage.removeItem('user');
         setUser(null);
         navigate("/login");
@@ -79,8 +78,6 @@ export const AuthProvider = ({ children }) => {
     const resetPassword = (email) => {
         sendPasswordResetEmail(auth, email)
             .then(() => {
-                // Password reset email sent!
-                // ..
                 setMsgResetPass("Um e-mail foi enviado com a recuperação da senha. Verifique também na caixa de SPAM e Lixeira");
                 setMsgResetPassStatus("success");
             })
