@@ -11,6 +11,7 @@ const HomePage = () => {
   const [cards, setCards] = useState([]);
 
   const getMonths = async () => {
+    console.log("passou no getMonth");
     const monthList = await getCollection('months');
     debugger;
     for (var i = 0; i < monthList.length; i++) {
@@ -29,10 +30,13 @@ const HomePage = () => {
     }
   };
 
-
   useEffect(() => {
-    getMonths();
+    if (!cards.length) {
+      console.log("passou no useEffect");
+      getMonths();
+    }
   }, []);
+
 
   const createCard = (year, month, text) => {
     debugger;
@@ -48,14 +52,15 @@ const HomePage = () => {
     setCards([...arrayCards]);
   };
 
-  return (
-
-    <section>
-      <AppNavBar></AppNavBar>
-      <CardRegistration createCard={createCard.bind(this)}></CardRegistration>
-      <CardList deleteCard={deleteCard.bind(this)} cards={cards}></CardList>
-    </section>
-  );
+  if (cards.length) {
+    return (
+      <section>
+        <AppNavBar></AppNavBar>
+        <CardRegistration createCard={createCard.bind(this)}></CardRegistration>
+        <CardList deleteCard={deleteCard.bind(this)} cards={cards}></CardList>
+      </section>
+    );
+  }
 }
 
 

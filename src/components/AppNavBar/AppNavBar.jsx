@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
 const AppNavBar = () => {
 
@@ -12,8 +11,9 @@ const AppNavBar = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
-        <Navbar.Brand to="/" style={{ "fontFamily": "GreatVibes", "fontSize": "30px" }} href="#">
-        <Link style={{color: 'inherit', textDecoration: 'none' }} to="/">Via Manzoni</Link></Navbar.Brand>
+        <Navbar.Brand to="/" style={{ "fontFamily": "GreatVibes", "fontSize": "30px", color: 'inherit', textDecoration: 'none' }} href="/">
+          Via Manzoni
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -21,16 +21,17 @@ const AppNavBar = () => {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link>
-              <Link style={{color: 'inherit', textDecoration: 'none' }} to="/receipts">Comprovantes</Link>
+
+            <Nav.Link style={{ color: 'inherit', textDecoration: 'none' }} href="/receipts">
+              Comprovantes
             </Nav.Link>
 
-            <Nav.Link>
-              <Link style={{color: 'inherit', textDecoration: 'none' }} to="/charts">Gráficos</Link>
+            <Nav.Link style={{ color: 'inherit', textDecoration: 'none' }} href="/charts">
+              Gráficos
             </Nav.Link>
 
-            <Nav.Link>
-              <Link style={{color: 'inherit', textDecoration: 'none' }} to="/reports">Relatórios</Link>
+            <Nav.Link style={{ color: 'inherit', textDecoration: 'none' }} href="/reports">
+              Relatórios
             </Nav.Link>
 
             <Nav.Link href="#" disabled>

@@ -22,6 +22,8 @@ const AppRoutes = () => {
         const { authenticated, loading } = useContext(AuthContext);
 
         if (loading) {
+            debugger;
+            console.log("passou no loading");
             return <div className="loading">Carregando...</div>
         }
 
