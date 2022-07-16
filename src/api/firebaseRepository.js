@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import firebaseConfig from './firebaseConfig';
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const app = initializeApp(firebaseConfig);
 //const auth = getAuth(app);
@@ -33,9 +33,6 @@ export const getDocByIDFirebase = async (collectionName, docID) => {
 }
 
 
-export const setDoc = async (collectionName,docID,object) => {
-    await setDoc(doc(db, collectionName, docID), 
-    {
-        object
-    });
+export const postDoc = async (collectionName, docID, object) => {
+    await setDoc(doc(db, collectionName, docID),object);
 };

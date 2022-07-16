@@ -4,16 +4,14 @@ import CardRegistration from "../../components/CardRegistration/CardRegistration
 import AppNavBar from '../../components/AppNavBar/AppNavBar';
 import "../../assets/App.css";
 import '../../assets/index.css';
-import { getCollection } from '../../api/firebaseRepository';
+import { getCollection, postDoc } from '../../api/firebaseRepository';
 
 const HomePage = () => {
 
   const [cards, setCards] = useState([]);
 
   const getMonths = async () => {
-    console.log("passou no getMonth");
     const monthList = await getCollection('months');
-    debugger;
     for (var i = 0; i < monthList.length; i++) {
       var card = {
         year: monthList[i].year,
@@ -41,9 +39,11 @@ const HomePage = () => {
   const createCard = (year, month, text) => {
     debugger;
     const newCard = { year, month, text };
-
-    if (!cards.find(o => o.year === newCard.year && o.month === newCard.month))
+    if (!cards.find(o => o.year === newCard.year && o.month === newCard.month)) {
       setCards([...cards, newCard]);
+      const idCard = String(newCard.month) + String(newCard.year);
+      postDoc("months", idCard, newCard);
+    }
   };
 
   const deleteCard = (indexCard) => {

@@ -49,7 +49,6 @@ export const AuthProvider = ({ children }) => {
 
                         localStorage.setItem("user", JSON.stringify(loggedUser));
                         setUser(loggedUser);
-                        debugger;
                         if (loggedUser.autorization === 0 || loggedUser.autorization === 'undefined') {
                             setMsgAuth("Seu usuário ainda não foi válidado pelo síndico!");
                             setAlertVariant("warning");
@@ -94,7 +93,6 @@ export const AuthProvider = ({ children }) => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
-                debugger;
                 const user = userCredential.user;
                 setMsgRegister("Usuario criado : " + user.email);
                 const app = initializeApp(firebaseConfig);

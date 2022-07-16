@@ -30,7 +30,6 @@ const CardRegistration = (props) => {
     const _createCard = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        debugger;
         props.createCard(year, month, text);
         event.target.reset();
         month = new Date().getMonth() + 1;

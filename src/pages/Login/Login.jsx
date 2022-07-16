@@ -15,7 +15,6 @@ export default function Login() {
   }
 
   function handleSubmit(event) {
-    debugger;
     event.preventDefault();
     login(email, password);
   }
