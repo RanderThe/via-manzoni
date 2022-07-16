@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs} from 'firebase/firestore';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import firebaseConfig from './firebaseConfig';
 import { doc, getDoc } from "firebase/firestore";
 
@@ -31,3 +31,11 @@ export const getDocByIDFirebase = async (collectionName, docID) => {
         return null;
     }
 }
+
+
+export const setDoc = async (collectionName,docID,object) => {
+    await setDoc(doc(db, collectionName, docID), 
+    {
+        object
+    });
+};
