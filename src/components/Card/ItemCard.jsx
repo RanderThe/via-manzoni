@@ -15,34 +15,35 @@ const ItemCard = (props) => {
     const monthName = monthNames[props.month];
 
     const deleteCard = () => {
+        debugger;
         const cardIndex = props.cardIndex;
         props.deleteCard(cardIndex);
     };
 
-        return (
-            <Row md={2} className="g-4">
-                <Col id='colCardID' className='ItemCard'>
-                    <Card className='CardItem'>
-                        <Card.Header>
-                            {monthName}-{props.year}
-                            <Image hidden={user.autorization!=1} className='imgTrash' type="button" alt="Deletar Card" src={deleteSVG}
-                                onClick={deleteCard.bind(this)} />
-                        </Card.Header>
-                        <Card.Body>
-                            <Card.Title>{props.year}-{props.month}</Card.Title>
-                            <Card.Text>
-                                {props.text}
-                            </Card.Text>
-                            <div className="centerButton">
-                                <Link to={`../CardDetail/${props.month + '' + props.year}`}>
-                                    <Button variant="primary">Ver relatório</Button>
-                                </Link>
-                            </div>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-        );
+    return (
+        <Row md={2} className="g-4">
+            <Col id='colCardID' className='ItemCard'>
+                <Card className='CardItem'>
+                    <Card.Header>
+                        {monthName}-{props.year}
+                        <Image hidden={user.autorization != 1} className='imgTrash' type="button" alt="Deletar Card" src={deleteSVG}
+                            onClick={deleteCard.bind(this)} />
+                    </Card.Header>
+                    <Card.Body>
+                        <Card.Title>{props.year}-{props.month}</Card.Title>
+                        <Card.Text ellipsizeMode='tail'>
+                            {`${props.text.substring(50, props.text)}...`}
+                        </Card.Text>
+                        <div className="centerButton">
+                            <Link to={`../CardDetail/${props.month + '' + props.year}`}>
+                                <Button variant="primary">Ver relatório</Button>
+                            </Link>
+                        </div>
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Row>
+    );
 }
 
 export default ItemCard;

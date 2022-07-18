@@ -4,7 +4,7 @@ import CardRegistration from "../../components/CardRegistration/CardRegistration
 import AppNavBar from '../../components/AppNavBar/AppNavBar';
 import "../../assets/App.css";
 import '../../assets/index.css';
-import { getCollection, postDoc } from '../../api/firebaseRepository';
+import { getCollection, postDoc, removeDoc } from '../../api/firebaseRepository';
 import { AuthContext } from "../../context/authContext";
 
 const HomePage = () => {
@@ -13,16 +13,17 @@ const HomePage = () => {
   const { user } = useContext(AuthContext);
   const getMonths = async () => {
     const monthList = await getCollection('months');
+    debugger;
     for (var i = 0; i < monthList.length; i++) {
       var card = {
+        idCard: monthList[i].idCard,
         year: monthList[i].year,
         month: monthList[i].month,
-        text: monthList[i].text,
-        key: monthList[i].key
+        text: monthList[i].text
       };
 
       const arrayCards = cards;
-      if (!cards.find(o => o.year === card.year && o.month === card.month)) {
+      if (!cards.find(o => o.idCard === card.idCard)) {
         arrayCards.push(card);
         setCards([...arrayCards]);
       }
@@ -37,22 +38,27 @@ const HomePage = () => {
 
 
   const createCard = (year, month, text) => {
-    const newCard = { year, month, text };
-    if (!cards.find(o => o.year === newCard.year && o.month === newCard.month)) {
+    debugger;
+    const idCard = String(month) + String(year)
+    const newCard = { year, month, text, idCard };
+    if (!cards.find(o => o.idCard === newCard.idCard)) {
       setCards([...cards, newCard]);
-      const idCard = String(newCard.month) + String(newCard.year);
       postDoc("months", idCard, newCard);
+    }
+    else{
+      alert("Mês já cadastrado !");
     }
   };
 
   const deleteCard = (indexCard) => {
+    debugger;
+    removeDoc("months", cards[indexCard].idCard);
     const arrayCards = cards;
     arrayCards.splice(indexCard, 1);
     setCards([...arrayCards]);
   };
 
-  if (cards.length) {
-    if(user.autorization != 1){
+    if (user.autorization != 1) {
       return (
         <section>
           <AppNavBar></AppNavBar>
@@ -60,7 +66,7 @@ const HomePage = () => {
         </section>
       );
     }
-    else{
+    else {
       return (
         <section>
           <AppNavBar></AppNavBar>
@@ -70,7 +76,6 @@ const HomePage = () => {
       );
     }
   }
-}
 
 
 export default HomePage;
