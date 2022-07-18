@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import CardList from "../../components/CardList/CardList";
 import CardRegistration from "../../components/CardRegistration/CardRegistration";
 import AppNavBar from '../../components/AppNavBar/AppNavBar';
 import "../../assets/App.css";
 import '../../assets/index.css';
 import { getCollection, postDoc } from '../../api/firebaseRepository';
+import { AuthContext } from "../../context/authContext";
 
 const HomePage = () => {
 
   const [cards, setCards] = useState([]);
-
+  const { user } = useContext(AuthContext);
   const getMonths = async () => {
     const monthList = await getCollection('months');
     for (var i = 0; i < monthList.length; i++) {
@@ -30,14 +31,12 @@ const HomePage = () => {
 
   useEffect(() => {
     if (!cards.length) {
-      console.log("passou no useEffect");
       getMonths();
     }
   }, []);
 
 
   const createCard = (year, month, text) => {
-    debugger;
     const newCard = { year, month, text };
     if (!cards.find(o => o.year === newCard.year && o.month === newCard.month)) {
       setCards([...cards, newCard]);
@@ -53,13 +52,23 @@ const HomePage = () => {
   };
 
   if (cards.length) {
-    return (
-      <section>
-        <AppNavBar></AppNavBar>
-        <CardRegistration createCard={createCard.bind(this)}></CardRegistration>
-        <CardList deleteCard={deleteCard.bind(this)} cards={cards}></CardList>
-      </section>
-    );
+    if(user.autorization != 1){
+      return (
+        <section>
+          <AppNavBar></AppNavBar>
+          <CardList cards={cards}></CardList>
+        </section>
+      );
+    }
+    else{
+      return (
+        <section>
+          <AppNavBar></AppNavBar>
+          <CardRegistration createCard={createCard.bind(this)}></CardRegistration>
+          <CardList deleteCard={deleteCard.bind(this)} cards={cards}></CardList>
+        </section>
+      );
+    }
   }
 }
 

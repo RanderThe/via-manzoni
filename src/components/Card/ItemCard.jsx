@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import "./ItemCardStyle.css";
 import deleteSVG from "../../assets/img/iconDelete.svg";
 import { Row, Col, Card, Button, Image } from 'react-bootstrap';
 import "../../assets/App.css";
 import { Link } from 'react-router-dom';
+import { AuthContext } from "../../context/authContext";
 
 const ItemCard = (props) => {
+    const { user } = useContext(AuthContext);
 
     const monthNames = ["", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
         "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
@@ -23,7 +25,7 @@ const ItemCard = (props) => {
                     <Card className='CardItem'>
                         <Card.Header>
                             {monthName}-{props.year}
-                            <Image className='imgTrash' type="button" alt="Deletar Card" src={deleteSVG}
+                            <Image hidden={user.autorization!=1} className='imgTrash' type="button" alt="Deletar Card" src={deleteSVG}
                                 onClick={deleteCard.bind(this)} />
                         </Card.Header>
                         <Card.Body>

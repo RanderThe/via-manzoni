@@ -5,7 +5,7 @@ import { Row, Col } from 'react-bootstrap';
 const CardList = (props) => {
     if (props.cards) {
         return (
-            <ul>
+            <ul style={{ "marginTop": "10px" }}>
                 <Row md={4} >
                     {props.cards.map((card, index) => (
                         <Col key={index}>
