@@ -20,7 +20,7 @@
         border-radius: 3px;
         border-top-right-radius: 0.25rem;
         border-bottom-right-radius: 0.25rem;
-        border: 1px solid blue;
+        border: 1px solid #888888;
         box-shadow: 0.9px 0.8px #888888;
     }
 }

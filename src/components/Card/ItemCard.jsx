@@ -15,7 +15,6 @@ const ItemCard = (props) => {
     const monthName = monthNames[props.month];
 
     const deleteCard = () => {
-        debugger;
         const cardIndex = props.cardIndex;
         props.deleteCard(cardIndex);
     };

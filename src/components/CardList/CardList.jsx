@@ -3,7 +3,6 @@ import ItemCard from "../Card/ItemCard";
 import { Row, Col } from 'react-bootstrap';
 
 const CardList = (props) => {
-    debugger;
     if (props.cards) {
         return (
             <ul style={{ "marginTop": "10px" }}>
@@ -27,7 +26,6 @@ const CardList = (props) => {
         );
     }
     else {
-        debugger;
         return (<p>nenhum card registrado</p>);
     }
 }

@@ -62,8 +62,8 @@ export default function Login() {
           </Alert>
           {isLoading ?
             <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
             </Spinner> : null}
+          <span className="visually-hidden">Entrando...</span>
         </div>
         <div className="d-grid">
           <Button block="true" size="lg" type="submit" disabled={!validateForm() || isLoading}>
