@@ -24,7 +24,7 @@
     "web-vitals": "^2.1.4"
   },
   "resolutions": {
-    "immer": "9.0.12",
+    "immer": "9.0.15",
     "shell-quote": "1.7.3",
     "merge": "^2.1.1",
     "axios": "0.27.2",
