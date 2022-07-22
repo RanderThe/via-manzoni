@@ -13,6 +13,7 @@ const HomePage = () => {
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(AuthContext);
+  
   const getMonths = async () => {
     const monthList = await getCollection('months');
     for (var i = 0; i < monthList.length; i++) {
@@ -33,6 +34,7 @@ const HomePage = () => {
   };
 
   useEffect(() => {
+    debugger;
     if (!cards.length) {
       getMonths();
     }
