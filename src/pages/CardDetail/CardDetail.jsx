@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import { useParams } from 'react-router';
+import CardDetailRegistration from '../../components/CardDetailRegistration/CardDetailRegistration';
+import AppNavBar from '../../components/AppNavBar/AppNavBar';
 import {
     BarChart,
     Bar,
@@ -62,46 +64,55 @@ const CardDetail = () => {
     const { id } = useParams();
 
     return (
-        <div >
-            <div style={{
-                "height": "200px",
-                "width": "100%"
-            }}>
-                <ResponsiveContainer width="100%" height="100%">
-                    <LineChart
-                        data={data}
-                        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                        <Line type="monotone" dataKey="value" stroke="#8884d8" dot={false} />
-                        <XAxis dataKey="year" />
-                        <YAxis />
-                    </LineChart>
-                </ResponsiveContainer>
+        <section>
+            <AppNavBar></AppNavBar>
+            <CardDetailRegistration></CardDetailRegistration>
+
+            <div >
+
+
 
                 <div style={{
-                    "height": "300px",
+                    "height": "200px",
                     "width": "100%"
                 }}>
                     <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                            <Pie
-                                data={data2}
-                                cx="50%"
-                                cy="50%"
-                                labelLine={false}
-                                label={renderCustomizedLabel}
-                                outerRadius={80}
-                                fill="#8884d8"
-                                dataKey="value"
-                            >
-                                {data.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                ))}
-                            </Pie>
-                        </PieChart>
+                        <LineChart
+                            data={data}
+                            margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                            <Line type="monotone" dataKey="value" stroke="#8884d8" dot={false} />
+                            <XAxis dataKey="year" />
+                            <YAxis />
+                        </LineChart>
                     </ResponsiveContainer>
+
+                    <div style={{
+                        "height": "300px",
+                        "width": "100%"
+                    }}>
+                        <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                                <Pie
+                                    data={data2}
+                                    cx="50%"
+                                    cy="50%"
+                                    labelLine={false}
+                                    label={renderCustomizedLabel}
+                                    outerRadius={80}
+                                    fill="#8884d8"
+                                    dataKey="value"
+                                >
+                                    {data.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
     );
 }
 
