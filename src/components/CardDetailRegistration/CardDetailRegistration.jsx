@@ -1,39 +1,91 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Col, Container } from "react-bootstrap"
+import "./CardDetailRegistrationStyle.css";
 
 const CardDetailRegistration = () => {
 
-    const [agua, setAgua] = useState("");
+    const [valueWater, setValueWater] = useState("");
+    const [valueEnergy, setValueEnergy] = useState("");
+    const [valueCondo, setValueCondo] = useState("");
+    const [descExtra, setDescExtra] = useState("")
+    const [valueExtra, setValueExtra] = useState("");
 
-    const _handlerAguaChange = (event) => {
-        debugger;
-        setAgua(event);
-    }
-    const _createCard = (event) => {
 
+    const _createUsualExpense = (event) => {
+
+
+        console.log("entrou no create");
     }
+
+    const _createUnusualExpense = (event) => {
+        console.log("entrou no create");
+    }
+
 
     return (
-        <div style={{ "margin": "10px" }} >
+        <div style={{ "margin": "10px" }} className="CardDetailRegistration" >
             <Container>
                 <Row>
                     <Col>
-                        <Form onSubmit={_createCard.bind(this)}>
-                            <Form.Text>Valor conta de Água:</Form.Text>
-                            <Form.Group size="lg">
-                                <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Escreva sua nota..."
-                                    value={agua}
-                                    onChange={(e) => _handlerAguaChange(e.target.value)} />
-                            </Form.Group>
-
-                            <div >
-                                <Button type="submit">Criar Mês</Button>
-                            </div>
+                        <Form onSubmit={_createUsualExpense.bind(this)}>
+                            <Form.Label>Despesas Recorrentes:</Form.Label>
+                            <Row>
+                                <Col>
+                                    <Form.Text>Água:</Form.Text>
+                                    <Form.Group size="lg">
+                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Escreva sua nota..."
+                                            value={valueWater}
+                                            onChange={(e) => setValueWater(e.target.value)} />
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Text>Energia:</Form.Text>
+                                    <Form.Group size="lg">
+                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Escreva sua nota..."
+                                            value={valueEnergy}
+                                            onChange={(e) => setValueEnergy(e.target.value)} />
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Text>Condomínio externo:</Form.Text>
+                                    <Form.Group size="lg">
+                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Escreva sua nota..."
+                                            value={valueCondo}
+                                            onChange={(e) => setValueCondo(e.target.value)} />
+                                    </Form.Group>
+                                </Col>
+                                <div className="centerButton">
+                                    <Button type="submit">Registrar Despesas</Button>
+                                </div>
+                            </Row>
                         </Form>
                     </Col>
                     <Col>
-                    </Col>
-                    <Col>
+                        <Form onSubmit={_createUnusualExpense.bind(this)}>
+                            <Form.Label>Despesas eventuais:</Form.Label>
+                            <Row>
+                                <Col>
+
+                                    <Form.Text>Descrição:</Form.Text>
+                                    <Form.Group size="lg">
+                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Escreva sua nota..."
+                                            value={descExtra}
+                                            onChange={(e) => setDescExtra(e.target.value)} />
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Text>Valor:</Form.Text>
+                                    <Form.Group size="lg">
+                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Escreva sua nota..."
+                                            value={valueExtra}
+                                            onChange={(e) => setValueExtra(e.target.value)} />
+                                    </Form.Group>
+                                </Col>
+                                <div className="centerButton">
+                                    <Button type="submit">Registrar Despesa</Button>
+                                </div>
+                            </Row>
+                        </Form>
                     </Col>
                 </Row>
             </Container>

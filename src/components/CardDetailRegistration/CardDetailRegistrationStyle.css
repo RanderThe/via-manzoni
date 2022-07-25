@@ -1,0 +1,23 @@
+.CardDetailRegistration {
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+    background-color: transparent;
+  }
+
+  .CardDetailRegistration form {
+    margin: 0 auto;
+    padding: 12px;
+    background-color: transparent;
+    border: 2px;
+    border-radius: 3px;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    border: 1px solid #bdbdbd;
+    box-shadow: 0.9px 0.8px #888888;
+  }
+
+
+  .CardDetailRegistration button {
+    margin: 10px;
+  }
