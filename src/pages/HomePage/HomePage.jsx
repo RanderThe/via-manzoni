@@ -13,7 +13,7 @@ const HomePage = () => {
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(AuthContext);
-  
+
   const getMonths = async () => {
     const monthList = await getCollection('months');
     for (var i = 0; i < monthList.length; i++) {
@@ -21,7 +21,8 @@ const HomePage = () => {
         idCard: monthList[i].idCard,
         year: monthList[i].year,
         month: monthList[i].month,
-        text: monthList[i].text
+        text: monthList[i].text,
+        expenses: monthList[i].expenses
       };
 
       const arrayCards = cards;
