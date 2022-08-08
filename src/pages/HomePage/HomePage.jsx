@@ -15,7 +15,9 @@ const HomePage = () => {
   const { user } = useContext(AuthContext);
 
   const getMonths = async () => {
+
     const monthList = await getCollection('months');
+
     for (var i = 0; i < monthList.length; i++) {
       var card = {
         idCard: monthList[i].idCard,
@@ -37,6 +39,7 @@ const HomePage = () => {
   useEffect(() => {
     debugger;
     if (!cards.length) {
+      console.log("passou");
       getMonths();
     }
   }, []);

@@ -5,6 +5,7 @@ import { Spinner } from "react-bootstrap";
 import CardDetailRegistration from '../../components/CardDetailRegistration/CardDetailRegistration';
 import AppNavBar from '../../components/AppNavBar/AppNavBar';
 import { getDocByIDFirebase } from '../../api/firebaseRepository';
+import { Row, Col } from 'react-bootstrap';
 import {
     BarChart,
     Bar,
@@ -40,6 +41,10 @@ const CardDetail = () => {
         }
     }, []);
 
+    function rowStyleFormat(row, rowIdx) {
+        return { backgroundColor: rowIdx % 2 === 0 ? 'red' : 'blue' };
+    }
+
 
     if (!monthFinances) {
         return (
@@ -65,24 +70,53 @@ const CardDetail = () => {
             <section>
                 <AppNavBar></AppNavBar>
                 <CardDetailRegistration></CardDetailRegistration>
-                <div >
-                    {<Table striped>
-                        <thead>
-                            <tr>
-                                <th>Descrição</th>
-                                <th>Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Object.keys(monthFinances.expenses).map((key, index) => (
+                <div style={{
+                    "justifyContent": "center",
+                    "textAlign": "center",
+                    "alignItems": "center",
+                    "margin": "10px" 
+                }}>
+                    <Row >
+                        <Col>
+                            <h2>Saídas</h2>
+                            <Table striped>
+                                <thead>
+                                    <tr>
+                                        <th>Descrição</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody style={{ "background": "#E3A4AD" }}>
+                                    {Object.keys(monthFinances.expenses).map((key, index) => (
 
-                                <tr key={index}>
-                                    <td>{key}</td>
-                                    <td>{monthFinances.expenses[key]}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>}
+                                        <tr key={index}>
+                                            <td>{key}</td>
+                                            <td>R${monthFinances.expenses[key]}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </Col>
+                        <Col>
+                            <h2>Entradas</h2>
+                            <Table striped>
+                                <thead>
+                                    <tr>
+                                        <th>Descrição</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody style={{ "background": "#B2D9F0" }}>
+                                    {Object.keys(monthFinances.entries).map((key, index) => (
+                                        <tr key={index}>
+                                            <td>{key}</td>
+                                            <td>{monthFinances.entries[key]}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </Col>
+                    </Row>
                 </div>
             </section>
         );
