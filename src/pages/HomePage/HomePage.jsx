@@ -7,6 +7,7 @@ import "../../assets/App.css";
 import '../../assets/index.css';
 import { getCollection, postDoc, removeDoc } from '../../api/firebaseRepository';
 import { AuthContext } from "../../context/authContext";
+import Loading from '../../components/Loading/Loading';
 
 const HomePage = () => {
 
@@ -64,23 +65,10 @@ const HomePage = () => {
     setCards([...arrayCards]);
   };
 
+
   if (isLoading) {
     return (
-      <section style={{
-        "justifyContent": "center",
-        "textAlign": "center",
-        "alignItems": "center",
-      }}>
-        <AppNavBar></AppNavBar>
-        <div style={{
-          "marginTop": "10%"
-        }}>
-          {isLoading ?
-            <Spinner animation="border" role="status">
-            </Spinner> : null}
-        </div>
-        <span >Carregando meses...</span>
-      </section >
+      <Loading msgLoading="Carregando meses..." />
     );
   }
 

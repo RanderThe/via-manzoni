@@ -1,11 +1,11 @@
-import React, { PureComponent, useState, useEffect } from 'react';
+import React, { PureComponent, useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router';
-import Table from 'react-bootstrap/Table';
-import { Spinner } from "react-bootstrap";
+import { Spinner, Row, Col, Form, Container } from "react-bootstrap";
 import CardDetailRegistration from '../../components/CardDetailRegistration/CardDetailRegistration';
 import AppNavBar from '../../components/AppNavBar/AppNavBar';
 import { getDocByIDFirebase } from '../../api/firebaseRepository';
-import { Row, Col } from 'react-bootstrap';
+import { AuthContext } from "../../context/authContext";
+import "../../assets/App.css";
 import {
     BarChart,
     Bar,
@@ -21,108 +21,75 @@ import {
     Legend,
     ResponsiveContainer
 } from "recharts";
+import DynamicTable from '../../components/Table/DynamicTable';
+import Loading from '../../components/Loading/Loading';
 
 const CardDetail = () => {
 
     const { id } = useParams();
     const [monthFinances, setMonthFinances] = useState();
+    const [isLoading, setIsLoading] = useState(true);
+    const { user } = useContext(AuthContext);
 
     const getMonths = async () => {
         const monthList = await getDocByIDFirebase('monthFinances', id);
-        debugger;
         setMonthFinances(monthList);
-        console.log(monthFinances);
+        setIsLoading(false);
     };
 
     useEffect(() => {
-        debugger;
         if (!monthFinances) {
             getMonths();
         }
     }, []);
 
-    function rowStyleFormat(row, rowIdx) {
-        return { backgroundColor: rowIdx % 2 === 0 ? 'red' : 'blue' };
+    const renderTable = () => {
+        var collectionHead = ['Descrição', 'Valor'];
+        if (monthFinances) {
+            return <div className='centerContent'>
+
+                <Row >
+                    <Col>
+                        <Container>
+                            <Form>
+                                <DynamicTable collectionData={monthFinances.expenses} title="Saídas" collectionHead={collectionHead} tableColor="#E3A4AD" />
+                            </Form>
+                        </Container>
+                    </Col>
+                    <Col>
+                        <Form>
+                            <DynamicTable collectionData={monthFinances.entries} title="Entradas" collectionHead={collectionHead} tableColor="#B2D9F0" />
+                        </Form>
+                    </Col>
+                </Row>
+
+            </div>;
+        } else {
+            return <p className='centerContent'>Nenhum valor cadastrado para o mês!</p>;
+        }
     }
 
+    const renderCardDetailRegister = () => {
+        debugger;
+        if (user.autorization == 1) {
+            return (<CardDetailRegistration></CardDetailRegistration>);
+        }
+    }
 
-    if (!monthFinances) {
+    if (isLoading) {
         return (
-            <section style={{
-                "justifyContent": "center",
-                "textAlign": "center",
-                "alignItems": "center",
-            }}>
-                <AppNavBar></AppNavBar>
-                <div style={{
-                    "marginTop": "10%"
-                }}>
-                    {!monthFinances ?
-                        <Spinner animation="border" role="status">
-                        </Spinner> : null}
-                </div>
-                <span >Carregando meses...</span>
-            </section >
+            <Loading msgLoading="Carregando finanças..." />
         );
     }
     else {
         return (
             <section>
                 <AppNavBar></AppNavBar>
-                <CardDetailRegistration></CardDetailRegistration>
-                <div style={{
-                    "justifyContent": "center",
-                    "textAlign": "center",
-                    "alignItems": "center",
-                    "margin": "10px" 
-                }}>
-                    <Row >
-                        <Col>
-                            <h2>Saídas</h2>
-                            <Table striped>
-                                <thead>
-                                    <tr>
-                                        <th>Descrição</th>
-                                        <th>Valor</th>
-                                    </tr>
-                                </thead>
-                                <tbody style={{ "background": "#E3A4AD" }}>
-                                    {Object.keys(monthFinances.expenses).map((key, index) => (
-
-                                        <tr key={index}>
-                                            <td>{key}</td>
-                                            <td>R${monthFinances.expenses[key]}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
-                        </Col>
-                        <Col>
-                            <h2>Entradas</h2>
-                            <Table striped>
-                                <thead>
-                                    <tr>
-                                        <th>Descrição</th>
-                                        <th>Valor</th>
-                                    </tr>
-                                </thead>
-                                <tbody style={{ "background": "#B2D9F0" }}>
-                                    {Object.keys(monthFinances.entries).map((key, index) => (
-                                        <tr key={index}>
-                                            <td>{key}</td>
-                                            <td>{monthFinances.entries[key]}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
-                        </Col>
-                    </Row>
-                </div>
+                {renderCardDetailRegister()}
+                {renderTable()}
             </section>
         );
     }
-
-
 }
 
 

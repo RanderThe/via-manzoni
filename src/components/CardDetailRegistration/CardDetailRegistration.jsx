@@ -33,7 +33,7 @@ const CardDetailRegistration = () => {
                                 <Col>
                                     <Form.Text>Água:</Form.Text>
                                     <Form.Group size="lg">
-                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Escreva sua nota..."
+                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Valor"
                                             value={valueWater}
                                             onChange={(e) => setValueWater(e.target.value)} />
                                     </Form.Group>
@@ -41,7 +41,7 @@ const CardDetailRegistration = () => {
                                 <Col>
                                     <Form.Text>Energia:</Form.Text>
                                     <Form.Group size="lg">
-                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Escreva sua nota..."
+                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Valor"
                                             value={valueEnergy}
                                             onChange={(e) => setValueEnergy(e.target.value)} />
                                     </Form.Group>
@@ -49,7 +49,7 @@ const CardDetailRegistration = () => {
                                 <Col>
                                     <Form.Text>Condomínio externo:</Form.Text>
                                     <Form.Group size="lg">
-                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Escreva sua nota..."
+                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Valor"
                                             value={valueCondo}
                                             onChange={(e) => setValueCondo(e.target.value)} />
                                     </Form.Group>
@@ -68,7 +68,7 @@ const CardDetailRegistration = () => {
 
                                     <Form.Text>Descrição:</Form.Text>
                                     <Form.Group size="lg">
-                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Escreva sua nota..."
+                                        <Form.Control type="text" placeholder="Desc. Despesa"
                                             value={descExtra}
                                             onChange={(e) => setDescExtra(e.target.value)} />
                                     </Form.Group>
@@ -76,7 +76,7 @@ const CardDetailRegistration = () => {
                                 <Col>
                                     <Form.Text>Valor:</Form.Text>
                                     <Form.Group size="lg">
-                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Escreva sua nota..."
+                                        <Form.Control type="number" min="0.00" max="10000.00" step="0.01" placeholder="Valor"
                                             value={valueExtra}
                                             onChange={(e) => setValueExtra(e.target.value)} />
                                     </Form.Group>
