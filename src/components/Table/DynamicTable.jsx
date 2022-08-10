@@ -2,7 +2,6 @@ import React from "react";
 import { Table } from "react-bootstrap";
 
 const DynamicTable = (data) => {
-debugger;
     return (
         <section>
             <h2>{ data.title }</h2>

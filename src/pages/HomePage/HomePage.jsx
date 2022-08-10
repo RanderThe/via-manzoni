@@ -38,7 +38,6 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    debugger;
     if (!cards.length) {
       console.log("passou");
       getMonths();

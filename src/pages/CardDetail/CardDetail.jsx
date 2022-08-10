@@ -48,13 +48,11 @@ const CardDetail = () => {
         if (monthFinances) {
             return <div className='centerContent'>
 
-                <Row >
+                <Row>
                     <Col>
-                        <Container>
-                            <Form>
-                                <DynamicTable collectionData={monthFinances.expenses} title="Saídas" collectionHead={collectionHead} tableColor="#E3A4AD" />
-                            </Form>
-                        </Container>
+                        <Form>
+                            <DynamicTable collectionData={monthFinances.expenses} title="Saídas" collectionHead={collectionHead} tableColor="#E3A4AD" />
+                        </Form>
                     </Col>
                     <Col>
                         <Form>
@@ -69,10 +67,13 @@ const CardDetail = () => {
         }
     }
 
+    const createItem = (object) => {
+
+    }
+
     const renderCardDetailRegister = () => {
-        debugger;
         if (user.autorization == 1) {
-            return (<CardDetailRegistration></CardDetailRegistration>);
+            return (<CardDetailRegistration createItem={createItem.bind(this)} cardData={monthFinances}></CardDetailRegistration>);
         }
     }
 
