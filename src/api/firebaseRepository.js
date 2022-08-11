@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import firebaseConfig from './firebaseConfig';
-import { doc, getDoc, setDoc, deleteDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, deleteDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 const app = initializeApp(firebaseConfig);
 //const auth = getAuth(app);
@@ -41,9 +41,7 @@ export const removeDoc = async (collectionName, docID) => {
 };
 
 
-export const updtDoc = async (collectionName, docID) => {
-    const docRef = doc(db, collectionName, docID);
-
-
-
-}
+export const updtDoc = async (collectionName, docID, object) => {
+    const washingtonRef = doc(db, collectionName, docID);
+    await setDoc(washingtonRef, object);
+};

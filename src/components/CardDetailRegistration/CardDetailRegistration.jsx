@@ -13,57 +13,83 @@ const CardDetailRegistration = (props) => {
     const [valueEntry, setValueEntry] = useState("");
 
     const _createUsualExpense = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        debugger;
+        if (!props.cardData) {
+            var object = _createItemStructure();
 
-
-        console.log("entrou no create");
+            object.expenses["Condomínio Externo"] = valueCondo || object.expenses["Condomínio Externo"];
+            object.expenses.Energia = valueEnergy || object.expenses.Energia;
+            object.expenses["Água"] = valueWater || object.expenses["Água"];
+            _createItem(object);
+        }
+        else {
+            props.cardData.expenses["Condomínio Externo"] = valueCondo || props.cardData.expenses["Condomínio Externo"];
+            props.cardData.expenses.Energia = valueEnergy || props.cardData.expenses.Energia;
+            props.cardData.expenses["Água"] = valueWater || props.cardData.expenses["Água"];
+            _createItem(props.cardData);
+        }
+        event.target.reset();
     };
 
     const _createUnusualExpense = (event) => {
-        console.log("entrou no create");
+        event.preventDefault();
+        event.stopPropagation();
+
+        var newExpense = {
+            [descExtra]: valueExtra
+        };
+        if (!props.cardData) {
+            var object = _createItemStructure();
+            object.expenses = Object.assign(object.expenses, newExpense);
+            _createItem(object);
+        }
+        else {
+            props.cardData.expenses = Object.assign(props.cardData.expenses, newExpense);
+            _createItem(object);
+        }
+        event.target.reset();
     };
 
     const _createEntry = (event) => {
-        debugger;
+        event.preventDefault();
+        event.stopPropagation();
+
+        var newEntry = {
+            [descEntry]: valueEntry
+        };
+
         if (!props.cardData) {
-
-            var newEntry = {
-                [descEntry]: valueEntry
-            };
-
-            var element = {}, cart = [];
-            element.id = id;
-            element.quantity = quantity;
-            cart.push({element: element});
-
-
-
             var object = _createItemStructure();
-
-            object.entries.push(newEntry);
-
-            console.log(object.entries);
+            object.entries = Object.assign(object.entries, newEntry);
+            _createItem(object);
         }
-        console.log("entrou no create");
+        else {
+            var object = props.cardData;
+            object.entries = Object.assign(object.entries, newEntry);
+            _createItem(object);
+        }
+        event.target.reset();
     };
+
+
 
     const _createItemStructure = () => {
         var object = {
-            entries: [],
+            entries: { "Condomínio": 0 },
             expenses: {
-                "Condomínio Externo": "",
-                "Água": "",
-                "Energia": ""
+                "Condomínio Externo": 0,
+                "Água": 0,
+                "Energia": 0
             }
         };
 
         return object;
     };
 
-    const _createItem = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        props.cardData._createEntry();
-        event.target.reset();
+    const _createItem = (object) => {
+        props.createItem(object);
     };
 
     return (

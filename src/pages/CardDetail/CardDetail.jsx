@@ -1,9 +1,9 @@
-import React, { PureComponent, useState, useEffect, useContext } from 'react';
+import React, { PureComponent, useState, useEffect, useContext,useReducer } from 'react';
 import { useParams } from 'react-router';
 import { Spinner, Row, Col, Form, Container } from "react-bootstrap";
 import CardDetailRegistration from '../../components/CardDetailRegistration/CardDetailRegistration';
 import AppNavBar from '../../components/AppNavBar/AppNavBar';
-import { getDocByIDFirebase } from '../../api/firebaseRepository';
+import { getDocByIDFirebase, postDoc, updtDoc } from '../../api/firebaseRepository';
 import { AuthContext } from "../../context/authContext";
 import "../../assets/App.css";
 import {
@@ -30,6 +30,7 @@ const CardDetail = () => {
     const [monthFinances, setMonthFinances] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const { user } = useContext(AuthContext);
+    const [, forceUpdate] = useReducer(x => x + 1, 0);
 
     const getMonths = async () => {
         const monthList = await getDocByIDFirebase('monthFinances', id);
@@ -41,35 +42,46 @@ const CardDetail = () => {
         if (!monthFinances) {
             getMonths();
         }
-    }, []);
+    }, [monthFinances]);
+
+    const createItem = (object) => {
+        if (!monthFinances) {
+            postDoc("monthFinances", id,object);
+        }
+        else {
+            updtDoc("monthFinances", id, object);
+        }
+        forceUpdate();
+    }
+
+    const deleteItem = (object,type) => {
+        delete monthFinances[type][object];
+        updtDoc("monthFinances", id, monthFinances);
+        forceUpdate();
+    }
 
     const renderTable = () => {
         var collectionHead = ['Descrição', 'Valor'];
         if (monthFinances) {
             return <div className='centerContent'>
-
                 <Row>
                     <Col>
                         <Form>
-                            <DynamicTable collectionData={monthFinances.expenses} title="Saídas" collectionHead={collectionHead} tableColor="#E3A4AD" />
+                            <DynamicTable deleteItem={deleteItem.bind(this)} collectionData={monthFinances.expenses} title="Saídas" collectionHead={collectionHead} tableColor="#E3A4AD" type="expenses" />
                         </Form>
                     </Col>
                     <Col>
                         <Form>
-                            <DynamicTable collectionData={monthFinances.entries} title="Entradas" collectionHead={collectionHead} tableColor="#B2D9F0" />
+                            <DynamicTable deleteItem={deleteItem.bind(this)} collectionData={monthFinances.entries} title="Entradas" collectionHead={collectionHead} tableColor="#B2D9F0" type="entries" />
                         </Form>
                     </Col>
                 </Row>
-
             </div>;
         } else {
             return <p className='centerContent'>Nenhum valor cadastrado para o mês!</p>;
         }
     }
 
-    const createItem = (object) => {
-
-    }
 
     const renderCardDetailRegister = () => {
         if (user.autorization == 1) {

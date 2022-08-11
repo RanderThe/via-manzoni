@@ -22,3 +22,17 @@
   align-items: center;
   margin: 10px;
 }
+
+.centerItem {
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.imgDelete {
+  position: 0 inherit;
+  align-self: center;
+  right: 0px;
+  width: 15%;
+  object-fit: contain;
+}
