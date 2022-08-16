@@ -67,7 +67,7 @@ const CardRegistration = (props) => {
                 </Form.Select>
                 <Form.Text>Gostaria de relatar algum fato relevante ?</Form.Text>
                 <Form.Group size="lg">
-                    <Form.Control type="text" placeholder="Escreva sua nota..." onChange={_handlerTextChange.bind(this)} />
+                    <Form.Control as="textarea" rows={2} placeholder="Escreva sua nota..." onChange={_handlerTextChange.bind(this)} />
                 </Form.Group>
                 <div className="centerButton">
                     <Button type="submit">Criar Mês</Button>

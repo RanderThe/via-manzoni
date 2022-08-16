@@ -1,4 +1,4 @@
-import React, { PureComponent, useState, useEffect, useContext,useReducer } from 'react';
+import React, { PureComponent, useState, useEffect, useContext, useReducer } from 'react';
 import { useParams } from 'react-router';
 import { Spinner, Row, Col, Form, Container } from "react-bootstrap";
 import CardDetailRegistration from '../../components/CardDetailRegistration/CardDetailRegistration';
@@ -29,12 +29,13 @@ const CardDetail = () => {
     const { id } = useParams();
     const [monthFinances, setMonthFinances] = useState();
     const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingTable, setIsLoadingTable] = useState(true);
     const { user } = useContext(AuthContext);
     const [, forceUpdate] = useReducer(x => x + 1, 0);
 
     const getMonths = async () => {
-        const monthList = await getDocByIDFirebase('monthFinances', id);
-        setMonthFinances(monthList);
+        const monthFinance = await getDocByIDFirebase('monthFinances', id);
+        setMonthFinances(monthFinance);
         setIsLoading(false);
     };
 
@@ -45,16 +46,19 @@ const CardDetail = () => {
     }, [monthFinances]);
 
     const createItem = (object) => {
+        debugger;
+        setIsLoadingTable(true);
         if (!monthFinances) {
-            postDoc("monthFinances", id,object);
+            postDoc("monthFinances", id, object).then(() => renderTable());
         }
         else {
-            updtDoc("monthFinances", id, object);
+            updtDoc("monthFinances", id, object).then(() => renderTable());
         }
+        setIsLoadingTable(false);
         forceUpdate();
     }
 
-    const deleteItem = (object,type) => {
+    const deleteItem = (object, type) => {
         delete monthFinances[type][object];
         updtDoc("monthFinances", id, monthFinances);
         forceUpdate();
@@ -63,6 +67,7 @@ const CardDetail = () => {
     const renderTable = () => {
         var collectionHead = ['Descrição', 'Valor'];
         if (monthFinances) {
+            debugger;
             return <div className='centerContent'>
                 <Row>
                     <Col>
@@ -89,22 +94,15 @@ const CardDetail = () => {
         }
     }
 
-    if (isLoading) {
-        return (
-            <Loading msgLoading="Carregando finanças..." />
-        );
-    }
-    else {
-        return (
-            <section>
+    return (
+        isLoading ? <Loading msgLoading="Carregando finanças..." /> :
+            (<section>
                 <AppNavBar></AppNavBar>
                 {renderCardDetailRegister()}
                 {renderTable()}
             </section>
-        );
-    }
+            ));
 }
-
 
 export default CardDetail;
 

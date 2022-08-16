@@ -28,7 +28,7 @@ const ItemCard = (props) => {
                         <Image hidden={user.autorization != 1} className='imgTrash' type="button" alt="Deletar Card" src={deleteSVG}
                             onClick={deleteCard.bind(this)} />
                     </Card.Header>
-                    <Card.Body>
+                    <Card.Body className='CardBody'>
                         <Card.Title>{props.year}-{props.month}</Card.Title>
                         <Card.Text ellipsizeMode='tail'>
                             {`${props.text.substring(50, props.text)}...`}
